@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="kozip",
-    version="1.0.0",
+    version="1.0.1",
     license="MIT",
     author="Heekang Park",
     author_email="park.heekang33@gmail.com",
