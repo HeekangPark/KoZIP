@@ -171,3 +171,4 @@ kozip.maskedZIPtoAddr("x0x01", masking_letter="x")
 - Lazy Loading 구현
   - 이제 실제 데이터를 사용할 때 데이터를 로드함
   - 사용하지 않는 데이터까지 모두 로드하지 않아, 객체 생성 속도가 빨라짐
+- 배포 자동화 스크립트 `commit` 생성
