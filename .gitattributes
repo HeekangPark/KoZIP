@@ -1,4 +1,2 @@
 kozip/new_zip.json filter=lfs diff=lfs merge=lfs -text
 kozip/old_zip.json filter=lfs diff=lfs merge=lfs -text
-build/lib/kozip/new_zip.json filter=lfs diff=lfs merge=lfs -text
-build/lib/kozip/old_zip.json filter=lfs diff=lfs merge=lfs -text

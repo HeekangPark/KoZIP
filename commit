@@ -12,6 +12,9 @@ python setup.py bdist_wheel
 
 # upload to pypi
 twine upload dist/*
+rm -rf dist/*
+rm -rf build/
+rm -rf *.egg-info/
 
 # push to github
 git config user.email "park.heekang33@gmail.com"
