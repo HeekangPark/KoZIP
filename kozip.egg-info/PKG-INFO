@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: kozip
-Version: 1.0.2
+Version: 1.1.1
 Summary: Convert Korean ZIP code to address
 Home-page: https://github.com/HeekangPark/KoZIP
 Author: Heekang Park
@@ -30,7 +30,7 @@ Python library for converting Korean ZIP code to address
 ## Quick Start
 
 ```python
-from kozip import KoZip
+from kozip import KoZIP
 
 kozip = KoZIP()
 
@@ -125,5 +125,66 @@ kozip.ZIPtoAddr("16419", depth="full")
 </tbody>
 </table>
 
+### KoZIP.maskedZIPtoAddr(masked_zipcode, masked_letter, depth, format)
 
+마스킹 처리된 우편번호를 입력받아 주소로 변환하는 메소드
+
+- `masked_zipcode` : 마스킹 처리된 우편번호
+  - **현 우편번호(5자리)만 사용 가능**
+  - **길이 5인 문자열 형태(`str`)로만 입력해야 함**
+  - 오직 한 종류의 마스킹 문자(`masked_letter`)로만 마스킹 되어있어야 함
+
+- `masking_letter` : [Optional(default: `*`)] 마스킹 문자
+  - 길이 1인 문자열 형태로 입력해야 함
+
+- `depth` : [Optional(default: `1`)] 출력될 주소의 깊이
+
+    | depth |     사용 가능한 값     |                       설명                        |
+    | :---: | :--------------------: | :-----------------------------------------------: |
+    |   1   |  `1`, `"1"`, `"시도"`  |                시도 단위까지 출력                 |
+    |   2   | `2`, `"2"`, `"시군구"` |           시군구 단위까지 출력. 기본값            |
+    |   3   | `3`, `"3"`, `"도로명"` |               도로명 단위까지 출력                |
+    |   4   |  `4`, `"4"`, `"full"`  | 도로명 단위에 추가 정보(읍면동, 리 정보)까지 출력 |
+
+- `format` : [Optional(default: `"string"`)] 출력 형식
+
+    | format | 사용 가능한 값 |                     설명                      |
+    | :----: | :------------: | :-------------------------------------------: |
+    | 문자열 |    "string"    |          문자열 형태로 출력. 기본값           |
+    | 리스트 |     "list"     | (`depth` 값과 같은 길이의) 리스트 형태로 출력 |
+
+```python
+from kozip import KoZIP
+
+kozip = KoZIP()
+
+kozip.maskedZIPtoAddr("08***")
+# 출력 :
+# ['서울특별시']
+
+kozip.maskedZIPtoAddr("164??", masking_letter="?", depth=2, format="list")
+# 출력 :
+# [ ['경기도', '수원시 권선구'],
+#   ['경기도', '수원시 팔달구'],
+#   ['경기도', '수원시 영통구'],
+#   ['경기도', '수원시 장안구'] ]
+
+kozip.maskedZIPtoAddr("x0x01", masking_letter="x")
+# 출력 :
+# ['경기도', '경상남도', '세종특별자치시', '경상북도']
+```
+
+## Changelog
+
+### v1.0
+
+- 최초 버전
+- `KoZIP.ZIPtoAddr(zipcode, depth, format)` 메서드 추가
+
+### v1.1
+
+- `KoZIP.maskedZIPtoAddr(masked_zipcode, masked_letter, depth, format)` 메서드 추가
+- Lazy Loading 구현
+  - 이제 실제 데이터를 사용할 때 데이터를 로드함
+  - 사용하지 않는 데이터까지 모두 로드하지 않아, 객체 생성 속도가 빨라짐
 
