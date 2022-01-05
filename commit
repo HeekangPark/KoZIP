@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# activate kozip environment
+eval "$(conda shell.bash hook)"
+conda activate kozip
+
+# build distribution
+rm -rf dist/*
+rm -rf build/
+rm -rf *.egg-info/
+python setup.py bdist_wheel
+
+# upload to pypi
+twine upload dist/*
+
+# push to github
+git config user.email "park.heekang33@gmail.com"
+git config user.name "Heekang Park"
+
+## read version from setup.py
+while read line || [ -n "$line" ] ; do
+    if [[ $line == version* ]]; then
+        version=`echo "$line" | cut -d'"' -f 2`
+    fi
+done < setup.py
+
+git add .
+git commit -m "v$version"
+git push origin master
